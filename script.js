@@ -157,3 +157,42 @@ backspaceButton.addEventListener("click", () => {
         display.textContent = "0";
     }
 });
+
+document.addEventListener("keydown", (event) => {
+    if(event.key >= "0" && event.key <= "9") {
+        const button = document.querySelector('.digit[data-key="' + event.key + '"]');
+
+        if(button){
+            button.click();
+        }
+    }
+
+    if(
+        event.key === "+" || event.key === "-" ||
+        event.key === "*" || event.key === "/"
+    ) {
+        const buttons = document.querySelectorAll(".operator");
+
+        buttons.forEach((button) => {
+            if(button.textContent === event.key) {
+                button.click();
+            }
+        });
+    }
+
+    if(event.key === "Enter" || event.key === "=") {
+        equalsButton.click();
+    }
+
+    if(event.key === "Backspace") {
+        backspaceButton.click();
+    }
+
+    if(event.key === "Escape"){
+        clearButton.click();
+    }
+
+    if(event.key === ".") {
+        decimalButton.click();
+    }
+});
