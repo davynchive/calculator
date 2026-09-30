@@ -40,7 +40,7 @@ function operate(operator, a, b) {
     if (typeof result === "number") {
         return Math.round(result * 100000000) / 100000000;
     }
-    
+
     return result;
 }
 
@@ -118,4 +118,42 @@ clearButton.addEventListener("click", () => {
     secondNumber = null;
     waitingForSecondNumber = false;
     resultDisplayed = false;
+});
+
+const decimalButton = document.querySelector("#decimal");
+
+decimalButton.addEventListener("click", () => {
+    if (resultDisplayed) {
+        display.textContent = "0.";
+        resultDisplayed = false;
+        firstNumber = null;
+        operator = null;
+        secondNumber = null;
+        waitingForSecondNumber = false;
+        return;
+    }
+
+    if (waitingForSecondNumber) {
+        display.textContent = "0.";
+        waitingForSecondNumber = false;
+        return;
+    }
+
+    if (!display.textContent.includes(".")) {
+        display.textContent += ".";
+    }
+});
+
+const backspaceButton = document.querySelector("#backspace");
+
+backspaceButton.addEventListener("click", () => {
+    if(resultDisplayed){
+        return;
+    }
+
+    if(display.textContent.length > 1) {
+        display.textContent = display.textContent.slice(0, -1);
+    } else {
+        display.textContent = "0";
+    }
 });
