@@ -11,6 +11,10 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if(b === 0){
+        return "Undefined.";
+    }
+
     return a / b;
 }
 
@@ -21,15 +25,23 @@ let waitingForSecondNumber = false;
 let resultDisplayed = false;
 
 function operate(operator, a, b) {
+    let result;
+
     if (operator === "+") {
-        return add(a, b);
+        result = add(a, b);
     } else if (operator === "-") {
-        return subtract(a, b);
+        result = subtract(a, b);
     } else if (operator === "*") {
-        return multiply(a, b);
+        result = multiply(a, b);
     } else if (operator === "/") {
-        return divide(a, b);
+        result = divide(a, b);
     }
+
+    if (typeof result === "number") {
+        return Math.round(result * 100000000) / 100000000;
+    }
+    
+    return result;
 }
 
 const display = document.querySelector("#display");
@@ -84,14 +96,14 @@ operatorButtons.forEach((button) => {
 const equalsButton = document.querySelector("#equals");
 
 equalsButton.addEventListener("click", () => {
-    secondNumber = Number(display.textContent);
-
-    if(firstNumber === null || operator === null || secondNumber === null) {
+    if (firstNumber === null || operator === null || waitingForSecondNumber) {
         return;
     }
 
+    secondNumber = Number(display.textContent);
+
     const result = operate(operator, firstNumber, secondNumber);
-    
+
     display.textContent = result;
     resultDisplayed = true;
 });
